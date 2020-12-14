@@ -38,4 +38,9 @@ class WifiScanBroadCastReceiverHelper(
         context.registerReceiver(wifiResultBroadCastReceiver, intentFilter)
     }
 
+    fun unregisterWifiScanBroadCastReceiver() {
+        context.unregisterReceiver(wifiResultBroadCastReceiver)
+        wifiResultBroadCastReceiver = null
+    }
+
 }

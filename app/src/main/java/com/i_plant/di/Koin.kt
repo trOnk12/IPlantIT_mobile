@@ -1,4 +1,4 @@
-package com.example.i_plant.enrollment.servicelocator
+package com.i_plant.di
 
 import android.content.Context
 import android.net.wifi.WifiManager
