@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
-import com.i_plant.core.SingletonHolder
 import java.lang.IllegalStateException
 
 class WifiScanner(
@@ -21,40 +20,6 @@ class WifiScanner(
 
     private fun handleIntent(intent: Intent): WifiScanResult {
 
-    }
-
-}
-
-class WifiScanBroadCastReceiverHelper(
-    private val context: Context
-) {
-
-    private var wifiResultBroadCastReceiver: BroadcastReceiver? = null
-
-    // catching IllegalStateException is work-around for the case when we try to register, already registered
-    // BroadCastReceiver somewhere else in our code.
-    fun startReceiving(onIntentResult: (Intent) -> Unit) {
-        try {
-            registerWifiScanBroadCastReceiver(onIntentResult)
-        } catch (exception: IllegalStateException) {
-            context.unregisterReceiver(wifiResultBroadCastReceiver)
-
-            registerWifiScanBroadCastReceiver(onIntentResult)
-        }
-    }
-
-    private fun registerWifiScanBroadCastReceiver(onReceive: (Intent) -> Unit) {
-        wifiResultBroadCastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                onReceive(intent)
-            }
-        }
-
-        val intentFilter = IntentFilter().apply {
-            addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        }
-
-        context.registerReceiver(wifiResultBroadCastReceiver, intentFilter)
     }
 
 }
