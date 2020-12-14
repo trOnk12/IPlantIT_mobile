@@ -1,4 +1,4 @@
-package com.i_plant.wifi
+package com.example.i_plant.wifi
 
 import android.content.BroadcastReceiver
 import android.content.Context

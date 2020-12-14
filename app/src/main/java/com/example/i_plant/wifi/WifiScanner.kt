@@ -1,35 +1,43 @@
-package com.i_plant.wifi
+package com.example.i_plant.wifi
 
 import android.content.Intent
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import java.lang.Exception
 
 class WifiScanner(
     private val wifiScanBroadCastReceiverHelper: WifiScanBroadCastReceiverHelper,
     private val wifiManager: WifiManager,
 ) {
 
-    fun startScan(onScanResult: (WifiScanResult) -> Unit) {
+    var counter = 0
+
+    fun startScan(onScanResult: (WifiScannerResult) -> Unit) {
         wifiScanBroadCastReceiverHelper.startReceiving { intent -> onScanResult(handleIntent(intent)) }
 
         wifiManager.startScan()
     }
 
-    private fun handleIntent(intent: Intent): WifiScanResult {
+    private fun handleIntent(intent: Intent): WifiScannerResult {
+        counter++
+        if (counter == 3) {
+            return WifiScannerResult.Failure
+        }
         return if (intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)) {
-            WifiScanResult.Success(wifiManager.scanResults)
+            WifiScannerResult.Success(wifiManager.scanResults)
         } else {
-            WifiScanResult.Failure
+            WifiScannerResult.Failure
         }
     }
 
-    fun stopScan(){
+    fun stopScan() {
         wifiScanBroadCastReceiverHelper.unregisterWifiScanBroadCastReceiver()
     }
 
 }
 
-sealed class WifiScanResult {
-    data class Success(val scanResult: List<ScanResult>) : WifiScanResult()
-    object Failure : WifiScanResult()
+sealed class WifiScannerResult {
+    data class Success(val scanResult: List<ScanResult>) : WifiScannerResult()
+    object Failure : WifiScannerResult()
 }
+
