@@ -41,21 +41,6 @@ class EnrollmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrollment)
 
-        Dexter.withContext(this)
-            .withPermissions(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-            ).withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) { /* ... */
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest?>?,
-                    token: PermissionToken?
-                ) { /* ... */
-                }
-            }).check()
-
         lifecycleScope.launch {
             try {
                 accessPointDeviceRepository.scanNearbyAccessPointDevices()

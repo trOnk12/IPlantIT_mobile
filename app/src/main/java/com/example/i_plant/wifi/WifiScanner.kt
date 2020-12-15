@@ -10,23 +10,23 @@ class WifiScanner(
     private val wifiManager: WifiManager,
 ) {
 
-    var counter = 0
+//    var counter = 0
 
-    fun startScan(onScanResult: (WifiScannerResult) -> Unit) {
+    fun startScan(onScanResult: (List<ScanResult>) -> Unit) {
         wifiScanBroadCastReceiverHelper.startReceiving { intent -> onScanResult(handleIntent(intent)) }
 
         wifiManager.startScan()
     }
 
-    private fun handleIntent(intent: Intent): WifiScannerResult {
-        counter++
-        if (counter == 3) {
-            return WifiScannerResult.Failure
-        }
+    private fun handleIntent(intent: Intent): List<ScanResult> {
+//        counter++
+//        if (counter == 3) {
+//            return WifiScannerResult.Failure
+//        }
         return if (intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)) {
-            WifiScannerResult.Success(wifiManager.scanResults)
+            wifiManager.scanResults
         } else {
-            WifiScannerResult.Failure
+            throw WifiScannerException()
         }
     }
 
@@ -36,8 +36,9 @@ class WifiScanner(
 
 }
 
-sealed class WifiScannerResult {
-    data class Success(val scanResult: List<ScanResult>) : WifiScannerResult()
-    object Failure : WifiScannerResult()
-}
+class WifiScannerException : Exception()
+//sealed class WifiScannerResult {
+//    data class Success(val scanResult: List<ScanResult>) : WifiScannerResult()
+//    object Failure : WifiScannerResult()
+//}
 
