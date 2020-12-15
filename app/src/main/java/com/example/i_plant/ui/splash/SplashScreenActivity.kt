@@ -2,6 +2,8 @@ package com.example.i_plant.ui.splash
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.i_plant.R
 import com.example.i_plant.core.startWithFinish
@@ -19,7 +21,9 @@ class SplashScreenActivity : AppCompatActivity(R.layout.activity_splash_screen) 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        askForPermissions()
+        Handler(Looper.getMainLooper()).postDelayed({
+            askForPermissions()
+        }, 1000)
     }
 
     private fun askForPermissions() {
