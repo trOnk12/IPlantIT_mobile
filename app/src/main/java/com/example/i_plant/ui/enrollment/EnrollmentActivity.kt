@@ -1,6 +1,6 @@
 package com.example.i_plant.ui.enrollment
 
-import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.i_plant.R
 import com.example.i_plant.data.repository.AccessPointDeviceRepository
+import com.example.i_plant.databinding.ActivityEnrollmentBinding
 import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentViewModel
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -28,30 +23,24 @@ import org.koin.dsl.module
 @ExperimentalCoroutinesApi
 class EnrollmentActivity : AppCompatActivity() {
     companion object {
-        fun getIntent(context: Context) : Intent {
-            return Intent(context,EnrollmentActivity::class.java)
+        fun getIntent(context: Context): Intent {
+            return Intent(context, EnrollmentActivity::class.java)
         }
+    }
+
+    private val binding: ActivityEnrollmentBinding by lazy {
+        ActivityEnrollmentBinding.inflate(layoutInflater)
     }
 
     private val enrollmentViewModel: EnrollmentViewModel by viewModel()
 
-    private val accessPointDeviceRepository: AccessPointDeviceRepository by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enrollment)
-
-        lifecycleScope.launch {
-            try {
-                accessPointDeviceRepository.scanNearbyAccessPointDevices()
-                    .collect { Log.d("TEST", "this is test $it") }
-            } catch (exception: Exception) {
-                Log.d("TEST", "TEST except")
-            }
-        }
-
+        setContentView(binding.root)
 
     }
+
+
 }
 
 @ExperimentalCoroutinesApi

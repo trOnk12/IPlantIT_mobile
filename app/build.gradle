@@ -26,6 +26,10 @@ android {
             minifyEnabled false
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
