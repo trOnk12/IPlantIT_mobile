@@ -1,5 +1,6 @@
 package com.example.i_plant.ui.enrollment.fragments.accesspoints
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,6 +34,12 @@ class NearbyIPlantAccessPointsFragment :
             container,
             false
         ) as FragmentNearbByIplantAccessPointsBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        viewModel.searchNearbyIPlantAccessPointDevices()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
