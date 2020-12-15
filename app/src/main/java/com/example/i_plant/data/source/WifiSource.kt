@@ -38,7 +38,7 @@ class WifiSource(private val wifiScanner: WifiScanner) : IWifiSource {
 
     private fun getIPlantAccessPoints(scanResult: List<ScanResult>): List<AccessPointDevice> =
         scanResult
-            .filter { it.SSID.toLowerCase(Locale.ROOT).contains(IPlantDeviceConfig.SSID_PREFIX) }
+//            .filter { it.SSID.toLowerCase(Locale.ROOT).contains(IPlantDeviceConfig.SSID_PREFIX) }
             .map { it.mapToAccessPointDevice() }
 
 }

@@ -26,7 +26,7 @@ class EnrollmentViewModel(
     val accessPointDevices: LiveData<List<AccessPointDevice>>
         get() = _accessPointDevices
 
-    init {
+    fun searchNearbyIPlantAccessPointDevices() {
         viewModelScope.launch {
             accessPointDeviceRepository.scanNearbyAccessPointDevices()
                 .collect { accessPointResult ->

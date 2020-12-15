@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/enrollment_nav_graph"
+    app:startDestination="@id/nearbyIPlantAccessPointsFragment">
+
+    <fragment
+        android:id="@+id/nearbyIPlantAccessPointsFragment"
+        android:name="com.example.i_plant.ui.enrollment.fragments.NearbyIPlantAccessPointsFragment"
+        android:label="Blank"
+        tools:layout="@layout/fragment_nearb_by_iplant_access_points" />
+
+</navigation>
