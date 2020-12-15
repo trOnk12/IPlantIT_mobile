@@ -17,14 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.i_plant.ui.splash.SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme">
+            android:name="com.example.i_plant.ui.splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.enrollment.EnrollmentActivity"/>
+
     </application>
 
 </manifest>
