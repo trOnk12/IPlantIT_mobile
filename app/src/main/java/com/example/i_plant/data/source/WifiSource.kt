@@ -8,8 +8,10 @@ import com.example.i_plant.wifi.WifiScanner
 import com.example.i_plant.wifi.WifiScannerResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -20,11 +22,10 @@ class WifiSource(private val wifiScanner: WifiScanner) : IWifiSource {
             when (result) {
                 is WifiScannerResult.Success -> {
                     val iPlantAccessPoints = getIPlantAccessPoints(result.scanResult)
-
-                    offer(AccessPointResult.Success(iPlantAccessPoints))
+                    sendBlocking(AccessPointResult.Success(iPlantAccessPoints))
                 }
                 is WifiScannerResult.Failure -> {
-                    offer(AccessPointResult.Failure)
+                    sendBlocking(AccessPointResult.Failure)
                     close()
                 }
             }
@@ -37,8 +38,7 @@ class WifiSource(private val wifiScanner: WifiScanner) : IWifiSource {
     }
 
     private fun getIPlantAccessPoints(scanResult: List<ScanResult>): List<AccessPointDevice> =
-        scanResult
-            .filter { it.SSID.toLowerCase(Locale.ROOT).contains(IPlantDeviceConfig.SSID_PREFIX) }
+        scanResult.filter { it.SSID.toLowerCase(Locale.ROOT).contains(IPlantDeviceConfig.SSID_PREFIX) }
             .map { it.mapToAccessPointDevice() }
 
 }

@@ -1,12 +1,13 @@
 package com.example.i_plant.data.source
 
 import com.example.i_plant.data.model.AccessPointDevice
+import com.example.i_plant.data.repository.AccessPointResult
 import kotlinx.coroutines.flow.Flow
 
 
 // Implementation of WiFiSource could change in the future, due to deprecated WifiManager.startScan() method and possible being removed from the API.
 interface IWifiSource {
-    fun scanNearbyAccessPointDevices(): Flow<WifiSourceResult>
+    fun scanNearbyAccessPointDevices(): Flow<AccessPointResult>
 }
 
 

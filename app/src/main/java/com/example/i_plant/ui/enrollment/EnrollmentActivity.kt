@@ -1,6 +1,8 @@
 package com.example.i_plant.ui.enrollment
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -23,14 +25,18 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.dsl.module
 
 
+@ExperimentalCoroutinesApi
 class EnrollmentActivity : AppCompatActivity() {
+    companion object {
+        fun getIntent(context: Context) : Intent {
+            return Intent(context,EnrollmentActivity::class.java)
+        }
+    }
 
-    @ExperimentalCoroutinesApi
     private val enrollmentViewModel: EnrollmentViewModel by viewModel()
 
     private val accessPointDeviceRepository: AccessPointDeviceRepository by inject()
 
-    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enrollment)
@@ -59,7 +65,6 @@ class EnrollmentActivity : AppCompatActivity() {
             }
         }
 
-        Log.d("TEST", "TEST")
 
     }
 }
