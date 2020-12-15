@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.i_plant.R
-import com.example.i_plant.core.startWithFinish
+import com.example.i_plant.core.extension.startWithFinish
 import com.example.i_plant.ui.enrollment.EnrollmentActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport

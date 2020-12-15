@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.i_plant.core.observe
+import com.example.i_plant.core.extension.observe
 import com.example.i_plant.data.model.AccessPointDevice
 import com.example.i_plant.databinding.ActivityEnrollmentBinding
 import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentFailure

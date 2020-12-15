@@ -1,4 +1,4 @@
-package com.example.i_plant.core
+package com.example.i_plant.core.extension
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
