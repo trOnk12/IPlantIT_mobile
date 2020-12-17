@@ -17,7 +17,11 @@ class WifiSource(private val wifiScanner: WifiScanner) : IWifiSource {
 
     override fun scanNearbyAccessPointDevices(): Flow<AccessPointResult> = callbackFlow {
         try {
-            getNearbyIPlantAccessPointDevices { sendBlocking(AccessPointResult.Success(it)) }
+            wifiScanner.startScan { scanResult ->
+                val accessPointDevices = getIPlantAccessPoints(scanResult)
+
+                sendBlocking(AccessPointResult.Success(accessPointDevices))
+            }
         } catch (exception: Exception) {
             sendBlocking(AccessPointResult.Failure)
 
@@ -28,12 +32,6 @@ class WifiSource(private val wifiScanner: WifiScanner) : IWifiSource {
             wifiScanner.stopScan()
         }
 
-    }
-
-    private fun getNearbyIPlantAccessPointDevices(onNearByIPlantAccessPointDevices: (List<AccessPointDevice>) -> Unit) {
-        wifiScanner.startScan { scanResult ->
-            onNearByIPlantAccessPointDevices(getIPlantAccessPoints(scanResult))
-        }
     }
 
     private fun getIPlantAccessPoints(scanResult: List<ScanResult>): List<AccessPointDevice> =
