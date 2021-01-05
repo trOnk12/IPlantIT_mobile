@@ -18,5 +18,5 @@ class AccessPointDeviceRepository(
 
 sealed class AccessPointResult {
     data class Success(val accessPointDevices: List<AccessPointDevice>) : AccessPointResult()
-    object Failure : AccessPointResult()
+    data class Failure(val exception : Exception) : AccessPointResult()
 }
