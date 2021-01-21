@@ -1,45 +1,50 @@
 package com.example.i_plant.ui.enrollment.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.i_plant.data.model.AccessPointDevice
-import com.example.i_plant.data.repository.AccessPointDeviceRepository
-import com.example.i_plant.data.repository.AccessPointResult
+import com.example.i_plant.core.extension.launchAndCollect
+import com.example.i_plant.core.failure.Failure
+import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentFailure.WifiScanError
+import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentFailure.UnknownError
+import com.example.i_plant.data.repository.IPlantDeviceRepository
+import com.example.i_plant.data.repository.IPlantDeviceRepositoryFailure
+import com.example.i_plant.data.source.IPlantAccessPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 class EnrollmentViewModel(
-    private val accessPointDeviceRepository: AccessPointDeviceRepository
+    private val iPlantDeviceRepository: IPlantDeviceRepository
 ) : ViewModel() {
 
     private val _failure = MutableLiveData<EnrollmentFailure>()
     val failure: LiveData<EnrollmentFailure>
         get() = _failure
 
-    private val _accessPointDevices = MutableLiveData<List<AccessPointDevice>>()
-    val accessPointDevices: LiveData<List<AccessPointDevice>>
-        get() = _accessPointDevices
+    private val _iPlantAccessPoints = MutableLiveData<List<IPlantAccessPoint>>()
+    val iPlantAccessPoints: LiveData<List<IPlantAccessPoint>>
+        get() = _iPlantAccessPoints
 
     fun searchNearbyIPlantAccessPointDevices() {
-        viewModelScope.launch {
-            accessPointDeviceRepository.scanNearbyAccessPointDevices()
-                .collect { accessPointResult ->
-                    when (accessPointResult) {
-                        is AccessPointResult.Success -> _accessPointDevices.value = accessPointResult.accessPointDevices
-                        is AccessPointResult.Failure -> _failure.value = EnrollmentFailure.WifiScan
-                    }
-                }
+        launchAndCollect(iPlantDeviceRepository.getNearbyAccessPointDevices()) { result ->
+            result.fold(::onIPlantAccessDeviceFailure, ::onIPlantAccessDeviceFound)
+        }
+    }
+
+    private fun onIPlantAccessDeviceFound(iPlantAccessPoints: List<IPlantAccessPoint>) {
+        _iPlantAccessPoints.value = iPlantAccessPoints
+    }
+
+    private fun onIPlantAccessDeviceFailure(failure: Failure) {
+        when (failure) {
+            is IPlantDeviceRepositoryFailure.WifiScannerFailure -> _failure.value = WifiScanError
+            else -> _failure.value = UnknownError
         }
     }
 
 }
 
 sealed class EnrollmentFailure {
-    object WifiScan : EnrollmentFailure()
+    object UnknownError : EnrollmentFailure()
+    object WifiScanError : EnrollmentFailure()
 }

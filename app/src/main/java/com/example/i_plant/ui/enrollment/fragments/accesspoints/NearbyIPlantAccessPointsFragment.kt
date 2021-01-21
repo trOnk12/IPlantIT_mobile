@@ -4,10 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.example.i_plant.R
 import com.example.i_plant.core.base.BindingFragment
 import com.example.i_plant.core.extension.observe
@@ -15,7 +13,6 @@ import com.example.i_plant.data.model.AccessPointDevice
 import com.example.i_plant.databinding.FragmentNearbByIplantAccessPointsBinding
 import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.koin.android.viewmodel.compat.SharedViewModelCompat.sharedViewModel
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 @ExperimentalCoroutinesApi
@@ -45,7 +42,7 @@ class NearbyIPlantAccessPointsFragment :
         super.onActivityCreated(savedInstanceState)
 
         with(viewLifecycleOwner) {
-            observe(viewModel.accessPointDevices, ::onAccessPointDevicesChanged)
+            observe(viewModel.iPlantAccessPoint, ::onAccessPointDevicesChanged)
         }
     }
 

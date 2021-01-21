@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.example.i_plant.R
-import com.example.i_plant.core.extension.startWithFinish
+import com.example.i_plant.core.extension.startAndFinishCurrentActivity
 import com.example.i_plant.ui.enrollment.EnrollmentActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -34,7 +34,7 @@ class SplashScreenActivity : AppCompatActivity(R.layout.activity_splash_screen) 
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
-                        startWithFinish(EnrollmentActivity.getIntent(this@SplashScreenActivity))
+                        startAndFinishCurrentActivity(EnrollmentActivity.getIntent(this@SplashScreenActivity))
                     }
                 }
 

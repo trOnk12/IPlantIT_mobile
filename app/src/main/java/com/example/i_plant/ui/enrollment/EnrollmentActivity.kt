@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.i_plant.core.extension.observe
-import com.example.i_plant.data.model.AccessPointDevice
+import com.example.i_plant.data.source.IPlantAccessPoint
 import com.example.i_plant.databinding.ActivityEnrollmentBinding
 import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentFailure
 import com.example.i_plant.ui.enrollment.viewmodel.EnrollmentViewModel
@@ -36,16 +36,16 @@ class EnrollmentActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         observe(enrollmentViewModel.failure, ::onFailure)
-        observe(enrollmentViewModel.accessPointDevices, ::onAccessPointDevicesChanged)
+        observe(enrollmentViewModel.iPlantAccessPoints, ::onIPlantAccessDevicesChange)
     }
 
-    private fun onAccessPointDevicesChanged(accessPointDevices: List<AccessPointDevice>) {
-        Log.d("TEST","accessPointDevices nearby  $accessPointDevices")
+    private fun onIPlantAccessDevicesChange(iPlantDevicesAccessPoint: List<IPlantAccessPoint>) {
+        Log.d("TEST","accessPointDevices nearby  $iPlantDevicesAccessPoint")
     }
 
     private fun onFailure(failure: EnrollmentFailure) {
         when (failure) {
-            is EnrollmentFailure.WifiScan ->  Toast.makeText(this,"Something when wrong while scanning wifi network",Toast.LENGTH_LONG).show()
+            is EnrollmentFailure.WifiScanError ->  Toast.makeText(this,"Something when wrong while scanning wifi network",Toast.LENGTH_LONG).show()
         }
     }
 
