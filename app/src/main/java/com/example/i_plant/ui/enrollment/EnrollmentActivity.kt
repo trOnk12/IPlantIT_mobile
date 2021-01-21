@@ -34,19 +34,6 @@ class EnrollmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        observe(enrollmentViewModel.failure, ::onFailure)
-        observe(enrollmentViewModel.iPlantAccessPoints, ::onIPlantAccessDevicesChange)
-    }
-
-    private fun onIPlantAccessDevicesChange(iPlantDevicesAccessPoint: List<IPlantAccessPoint>) {
-        Log.d("TEST","accessPointDevices nearby  $iPlantDevicesAccessPoint")
-    }
-
-    private fun onFailure(failure: EnrollmentFailure) {
-        when (failure) {
-            is EnrollmentFailure.WifiScanError ->  Toast.makeText(this,"Something when wrong while scanning wifi network",Toast.LENGTH_LONG).show()
-        }
     }
 
 }
